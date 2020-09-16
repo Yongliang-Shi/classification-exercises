@@ -42,6 +42,15 @@ def prep_titanic(titanic):
     test[['age']] = imputer.transform(test[['age']])
     return train, validate, test
 
+def prep_titanic_mean(titanic):
+    train, validate, test = cleaning_spliting(titanic)
+    imputer = SimpleImputer(strategy = 'mean')
+    imputer = imputer.fit(train[['age']])
+    train[['age']] = imputer.transform(train[['age']])
+    validate[['age']] = imputer.transform(validate[['age']])
+    test[['age']] = imputer.transform(test[['age']])
+    return train, validate, test
+
 def prep_iris(iris):
     iris.drop(columns=['species_id','measurement_id'], inplace=True)
     iris.rename(columns={'species_name':'species'}, inplace=True)
