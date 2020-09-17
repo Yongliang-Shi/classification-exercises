@@ -16,9 +16,10 @@ warnings.filterwarnings("ignore")
 def cleaning(titanic):
     drop_index = titanic[titanic.embarked.isnull()].index
     titanic.drop(index=drop_index, inplace=True)
-    titanic.drop(columns='deck', inplace=True)
-    embarked_dummies = pd.get_dummies(titanic[['embarked']], drop_first=True)
-    titanic = pd.concat([titanic,embarked_dummies], axis=1)
+    titanic.drop(columns=['deck', 'passenger_id'], inplace=True)
+    dummies = pd.get_dummies(titanic[['sex','embarked']], drop_first=True)
+    titanic = pd.concat([titanic, dummies], axis=1)
+    titanic.drop(columns=['sex', 'embarked','class','embark_town'], inplace=True)
     return titanic
 
 def cleaning_spliting(titanic):
